@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxChessBoardService, PieceIconInput } from 'ngx-chess-board';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { NgxChessBoardService, PieceIconInput, NgxChessBoardComponent, NgxChessBoardView } from 'ngx-chess-board';
 
 @Component({
   selector: 'app-chess-game',
@@ -8,6 +8,11 @@ import { NgxChessBoardService, PieceIconInput } from 'ngx-chess-board';
 })
 export class ChessGameComponent implements OnInit {
 
+  // Change remaining colors in css through html .board -> .board-row -> .board-col
+
+  @ViewChild('board', {static: false}) 
+  board!: NgxChessBoardView;
+  
   lightTileColor = "#f0d9b5";
   darkTileColor = "#b58863";
 
@@ -37,4 +42,27 @@ export class ChessGameComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  moveDone() {
+    
+  }
+
+  reset() {
+    this.board.reset();
+  }
+
+  reverse() {
+    this.board.reverse();
+  }
+
+  getMoveHistory() {
+    this.board.getMoveHistory();
+  }
+
+  getFEN() {
+    this.board.getFEN();
+  }
+
+  move(move: string) {
+    this.board.move(move);
+  }
 }
