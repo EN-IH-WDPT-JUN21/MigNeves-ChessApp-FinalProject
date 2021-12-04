@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ChessGameComponent } from './chess-game/chess-game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChessBoardModule } from 'ngx-chess-board';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NgxChessBoardModule } from 'ngx-chess-board';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxChessBoardModule.forRoot()
+    NgxChessBoardModule.forRoot(),
+    AuthRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
