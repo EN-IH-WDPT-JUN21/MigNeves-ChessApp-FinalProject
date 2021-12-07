@@ -7,6 +7,7 @@ import com.ironhack.game_service.enums.EndResult;
 import com.ironhack.game_service.enums.GameType;
 import com.ironhack.game_service.proxy.MoveProxy;
 import com.ironhack.game_service.repository.GameRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,15 +20,24 @@ public class Validator {
 
     private final MoveProxy moveProxy;
     private final GameRepository gameRepository;
+    private final MoveServiceMock moveServiceMock;
+    @Value("${running.test}")
+    private boolean test;
 
-    public Validator(MoveProxy moveProxy, GameRepository gameRepository) {
+    public Validator(MoveProxy moveProxy, GameRepository gameRepository, MoveServiceMock moveServiceMock) {
         this.moveProxy = moveProxy;
         this.gameRepository = gameRepository;
+        this.moveServiceMock = moveServiceMock;
     }
 
     public List<MoveDTO> getValidatedMoves(Long gameId, int halfMoves) {
         try {
-            List<MoveDTO> moves = this.moveProxy.getMovesFromGame(gameId);
+            List<MoveDTO> moves;
+            if (!test) {
+                moves = this.moveProxy.getMovesFromGame(gameId);
+            } else {
+                moves = moveServiceMock.getMockMoves();
+            }
             if (moves.size() != halfMoves) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Number of moves does not match!");
             } else {
@@ -53,5 +63,16 @@ public class Validator {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The game has ended, no more moves allowed!");
         }
         return game.get();
+    }
+
+    public boolean validatePassword(String password, Game game) {
+        if (password.equals(game.getWhitePassword())) {
+            return true;
+        } else if (password.equals(game.getBlackPassword())) {
+            return false;
+        } else {
+            System.out.println(password + " " + game.getWhitePassword());
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password doesn't match");
+        }
     }
 }

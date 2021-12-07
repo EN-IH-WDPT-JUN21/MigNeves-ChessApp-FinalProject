@@ -11,7 +11,6 @@
     <file url="file://$PROJECT_DIR$/gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/moves-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/moves-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/okta/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/src/main/resources" charset="UTF-8" />
   </component>

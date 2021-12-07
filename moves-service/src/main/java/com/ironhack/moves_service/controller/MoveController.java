@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("chess/move")
+@RequestMapping("/chess/move")
 public class MoveController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class MoveController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public List<MoveDTO> addMoveToGame(@RequestBody @Valid MoveDTO moveDTO) {
         return this.moveService.addMoveToGame(moveDTO);
     }

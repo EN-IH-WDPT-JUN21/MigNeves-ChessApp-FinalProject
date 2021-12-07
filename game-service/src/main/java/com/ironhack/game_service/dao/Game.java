@@ -6,12 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -31,6 +33,9 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private EndResult result;
     private LocalDateTime startDate;
+    private String whitePassword;
+    private String blackPassword;
+    private String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
     public Game(GameType gameType, Long whitePiecesPlayerId, Long blackPiecesPlayerId) {
         setGameType(gameType);
@@ -54,5 +59,11 @@ public class Game {
         setHalfMoves(0);
         setResult(EndResult.UNFINISHED);
         setStartDate(LocalDateTime.now(ZoneId.of("Europe/London")));
+        setWhitePassword(RandomStringUtils.randomAlphanumeric(10));
+        String blackPassword = RandomStringUtils.randomAlphanumeric(10);
+        while (blackPassword.equals(getWhitePassword())) {
+            blackPassword = RandomStringUtils.randomAlphanumeric(10);
+        }
+        setBlackPassword(blackPassword);
     }
 }

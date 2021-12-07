@@ -1,5 +1,6 @@
 package com.ironhack.game_service.controller;
 
+import com.ironhack.game_service.dto.GameCreatedDTO;
 import com.ironhack.game_service.dto.GameDTO;
 import com.ironhack.game_service.dto.SimplifiedGameDTO;
 import com.ironhack.game_service.service.GameService;
@@ -10,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.ws.rs.PathParam;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("chess/game")
+@RequestMapping("/chess/game")
 public class GameController {
 
     @Autowired
@@ -20,31 +22,31 @@ public class GameController {
 
     @GetMapping(path = "", params = {"userId"})
     @ResponseStatus(HttpStatus.OK)
-    private List<SimplifiedGameDTO> getGamesFromUser(@PathParam("userId") Long userId) {
+    public List<SimplifiedGameDTO> getGamesFromUser(@PathParam("userId") Long userId) {
         return gameService.getGamesFromUser(userId);
     }
 
-    @GetMapping(path = "", params = {"gameId"})
+    @GetMapping(path = "", params = {"gameId", "password"})
     @ResponseStatus(HttpStatus.OK)
-    private GameDTO getGameFromId(@PathParam("gameId") Long gameId) {
-        return gameService.getCompleteGameFromId(gameId);
+    public GameDTO getGameFromId(@PathParam("gameId") Long gameId, @PathParam("password") String password) {
+        return gameService.getCompleteGameFromId(gameId, password);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private SimplifiedGameDTO addGame(@RequestBody GameDTO gameDTO) {
+    public GameCreatedDTO addGame(@RequestBody GameCreatedDTO gameDTO) {
         return gameService.addGame(gameDTO);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    private GameDTO updateGame(@RequestBody GameDTO gameDTO) {
+    public GameDTO updateGame(@RequestBody GameDTO gameDTO) {
         return gameService.updateGame(gameDTO);
     }
 
     @DeleteMapping("/{gameId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void deleteGame(@PathVariable("gameId") Long gameId) {
+    public void deleteGame(@PathVariable("gameId") Long gameId) {
         gameService.deleteGame(gameId);
     }
 

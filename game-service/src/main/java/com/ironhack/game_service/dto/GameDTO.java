@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -26,8 +27,15 @@ public class GameDTO {
     private LocalDateTime startDate;
     private List<MoveDTO> moves;
     private MoveDTO moveToAdd;
+    private String password;
+    private boolean colorWhite;
+    private String fen;
 
-    public static GameDTO GameToGameDTO(Game game) {
+    public static GameDTO GameToGameDTO(Game game, boolean color) {
+        return GameToGameDTO(game, color, new ArrayList<>());
+    }
+
+    public static GameDTO GameToGameDTO(Game game, boolean color, List<MoveDTO> moves) {
         return new GameDTO(
                 game.getId(),
                 game.getGameType(),
@@ -35,8 +43,11 @@ public class GameDTO {
                 game.getBlackPiecesPlayerId(),
                 game.getResult(),
                 game.getStartDate(),
-                new ArrayList<>(),
-                null
+                moves,
+                null,
+                null,
+                color,
+                game.getFen()
         );
     }
 }

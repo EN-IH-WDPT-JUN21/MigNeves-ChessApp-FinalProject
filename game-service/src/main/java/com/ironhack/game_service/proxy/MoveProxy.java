@@ -16,5 +16,5 @@ public interface MoveProxy {
     List<MoveDTO> addMoveToGame(@RequestBody MoveDTO moveDTO);
 
     @DeleteMapping("/chess/move/{gameId}")
-    void deleteMovesFromGame(@PathVariable("gamedId") Long gameId);
+    void deleteMovesFromGame(@PathVariable("gameId") Long gameId);
 }

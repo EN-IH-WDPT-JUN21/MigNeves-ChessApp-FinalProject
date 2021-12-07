@@ -1,0 +1,23 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" style = "font-family: 'Righteous'; color: #354855">Wish to join a game?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="name" style = "font-family: 'Roboto'; color: #354855">Game password</label>
+          <div class="input-group">
+            <input id="password" class="form-control" placeholder="password..." name="password" [(ngModel)]="passwordAndId"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click'); joinGame(passwordAndId)">Save</button>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-secondary" (click)="open(content)">Join Game</button>
