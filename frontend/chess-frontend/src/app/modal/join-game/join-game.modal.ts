@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-join-game',
-  templateUrl: './join-game.modal.html'
+  templateUrl: './join-game.modal.html',
+  styleUrls: ['../../../assets/modal.css']
 })
 export class JoinGameModal {
   closeResult = '';

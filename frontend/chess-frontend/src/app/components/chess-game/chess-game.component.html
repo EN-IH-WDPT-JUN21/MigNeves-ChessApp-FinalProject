@@ -1,4 +1,4 @@
-<ngx-chess-board #board [size]="600" [showLastMove]="false" [lightTileColor]="lightTileColor" [darkTileColor]="darkTileColor" [pieceIcons]="pieceIcons" [sourcePointColor]="lightTileMovedColor" [destinationPointColor]="darkTileMovedColor" (moveChange)="moveDone()"></ngx-chess-board>
+<ngx-chess-board #board [size]="600" [drawDisabled]="true" [showLastMove]="false" [lightTileColor]="lightTileColor" [darkTileColor]="darkTileColor" [pieceIcons]="pieceIcons" (moveChange)="moveDone()"></ngx-chess-board>
 <div class="container-none" *ngIf="opponentPassword != null">
     <p>Join game with password: {{opponentPassword}}-{{gameId}}</p>
 </div>

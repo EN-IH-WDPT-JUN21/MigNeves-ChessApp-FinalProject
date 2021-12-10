@@ -1,6 +1,11 @@
-<div class="container-none">
-    <app-create-game (gameCreated)="createGame($event)"></app-create-game>
-    <app-join-game (gameJoined)="joinGame($event)"></app-join-game>
-    <button class="btn btn-secondary">Open Games</button>
-    <button class="btn btn-secondary">Latest Games</button>
+<div class="d-flex flex-row justify-content-around flex-wrap">
+    <div class="container-none">
+        <ngx-chess-board [size]="500" [drawDisabled]="true" [showCoords]="false" [showLastMove]="false" [showLegalMoves]="false" [lightTileColor]="tileColors[0]" [dragDisabled]="true" [lightDisabled]="true" [darkDisabled]="true" [showActivePiece]="false" [darkTileColor]="tileColors[1]" [pieceIcons]="pieces"></ngx-chess-board>
+    </div>
+    <div class="d-flex flex-column flex-wrap align-content-around justify-content-around" style="height: 500px; width: 40%;">
+        <app-create-game style="width: 45%;" (gameCreated)="createGame($event)"></app-create-game>
+        <app-join-game style="width: 45%;" (gameJoined)="joinGame($event)"></app-join-game>
+        <button style="width: 45%;" class="btn btn-secondary btn-chess btn-chess-home">Open Games</button>
+        <button style="width: 45%;" class="btn btn-secondary btn-chess btn-chess-home">Latest Games</button>
+    </div>
 </div>

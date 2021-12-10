@@ -1,3 +1,4 @@
+import { SettingsComponent } from './components/settings/settings.component';
 import { ChessGameComponent } from './components/chess-game/chess-game.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'game/:gameId',
     component: ChessGameComponent
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent
   },
   {
     path: '**',

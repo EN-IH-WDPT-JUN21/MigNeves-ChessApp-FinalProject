@@ -1,0 +1,47 @@
+<div class="navbar-nav" #stickyMenu [class.sticky]="sticky">
+    <div class="nav-item" style="float: left;">
+      <a
+        routerLink="/"
+        class="nav-link"
+        routerLinkActive="router-link-exact-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+      <img src="./assets/img/en_passant.png" style="max-width: 65px; margin-left: 40px;;">
+      </a>
+    </div>
+  
+    <div class="menu" >
+    <!--<div class="nav-item">
+      <a
+        routerLink="/movies"
+        class="nav-link"
+        routerLinkActive="router-link-exact-active"
+      >
+      <i class="bi bi-search" style="font-size: 25px; min-width: 50px; color: #f5f7fa; justify-content: space-between; "></i>
+      </a>
+    </div>
+    <div class="nav-item">
+      <a
+        routerLink="/profile"
+        class="nav-link"
+        routerLinkActive="router-link-exact-active"
+      >
+      <i class="bi bi-person-fill" style="font-size: 2rem; min-width: 50px; color: #f5f7fa; justify-content: space-between; margin-left: 20px;"></i>
+      </a>
+    </div>
+    -->
+  
+    <div class="nav-item">
+      <a
+        routerLink="/settings"
+        class="nav-link"
+        routerLinkActive="router-link-exact-active"
+      >
+      <i class="bi bi-gear" style="font-size: 2rem; min-width: 50px; color: #f5f7fa; justify-content: space-between; margin-left: 20px;"></i>
+      </a>
+    </div>  
+  </div>
+  
+  
+  <!-- this is fake long content -->
+  <div class="content"></div>

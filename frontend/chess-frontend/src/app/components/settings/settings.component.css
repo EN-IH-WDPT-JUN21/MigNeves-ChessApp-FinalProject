@@ -1,0 +1,31 @@
+.settings-container {
+    background-color: #1f2933;
+    border-radius: 7px;
+    padding-left: 60px;
+    
+}
+
+.settings-container h1 {
+    color: #f5f7fa;
+}
+
+.settings-container .btn-chess {
+    background-color: #127e68;
+}
+
+.settings-container .btn-chess:hover {
+    background-color: #16a085;
+}
+    
+.btn-chess:active, .btn-chess.active,
+.show > .btn-chess.dropdown-toggle {
+    background-color: #16a085;
+    background-image: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 3px #64c7b3;
+}
+
+.overflow {
+    max-height: 150px;
+    overflow-y: auto;
+}

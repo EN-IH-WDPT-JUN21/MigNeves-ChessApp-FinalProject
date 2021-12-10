@@ -1,0 +1,17 @@
+.container-none {
+    background-color: #1f2933;
+    border-radius: 7px;
+    padding-left: 60px;
+    
+}
+
+.container-none h1 {
+    padding-top: 225px;
+    padding-bottom: 20px;
+    color: #f5f7fa;
+}
+
+.container-none h4 {
+    
+    color: #f5f7fa;
+}

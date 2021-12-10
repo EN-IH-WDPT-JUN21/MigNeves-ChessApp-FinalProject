@@ -1,0 +1,27 @@
+<div class="d-flex flex-row justify-content-around flex-wrap">
+    <div class="d-flex flex-row flex-wrap" style="width: 375px; height: 500px;">
+        <div class="d-flex" style="width: 125px; height: 125px;" *ngFor="let piece of pieceArray; let id = index;" [ngStyle]="id % 2 === 0 ? {'background-color': colors[0]} : {'background-color': colors[1]}">
+            <img class=".single-piece" style="width: 80px; margin: auto;" [src]="piece"/>
+        </div>
+    </div>
+    <div class = "d-flex flex-column justify-content-around settings-container" style="height: 500px; width: 40%;">
+        <div class="setting-item">
+            <h1>Piece Set</h1>
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-secondary btn-chess" id="dropdownBasic1" ngbDropdownToggle>Chess piece</button>
+                <div class="overflow" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button *ngFor="let piece of pieceSetNames" (click)="pieceSetChange(piece)" ngbDropdownItem>{{piece | titlecase}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="setting-item">
+            <h1>Tile theme</h1>
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-secondary btn-chess" id="dropdownBasic1" ngbDropdownToggle>Tile colors</button>
+                <div class="overflow" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button *ngFor="let color of colorTileThemes; let id = index;" (click)="tileChange(id)" ngbDropdownItem>{{color[2] | titlecase}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

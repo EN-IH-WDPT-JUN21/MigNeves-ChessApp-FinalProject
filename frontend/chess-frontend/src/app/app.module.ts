@@ -13,6 +13,8 @@ import { CreateGameModal } from './modal/create-game/create-game.modal';
 import { JoinGameModal } from './modal/join-game/join-game.modal';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeaderComponent } from './header/header.component';
+import { SettingsComponent } from './components/settings/settings.component';
 // import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
@@ -22,7 +24,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     PageNotFoundComponent,
     CreateGameModal,
-    JoinGameModal
+    JoinGameModal,
+    HeaderComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

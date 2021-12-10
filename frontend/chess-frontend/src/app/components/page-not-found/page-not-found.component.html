@@ -1,7 +1,18 @@
-<div class = "container-none">
-    <h3>THIS PAGE DOES NOT EXIST</h3>
-    <h4>Google en passant!</h4>
-    <a routerLink="/"
-    class="nav-link"
-    routerLinkActive="router-link-exact-active">GO HOME</a>
+<div class="d-flex flex-row justify-content-around flex-wrap">
+    <div class="d-flex flex-column" style="width: 500px; height: 500px;">
+        <div class="d-flex flex-row" style="width: 500px; height: 12.5%;" *ngFor="let line of [0,1,2,3,4,5,6,7]">
+            <div class="d-flex align-items-center justify-content-center" style="width: 12.5%; height: 100%;" *ngFor="let row of [0,1,2,3,4,5,6,7]" [ngStyle]="row%2 === line%2 ? {'background-color': colors[0]} : {'background-color': colors[1]}">
+                <img *ngIf="row % 2 !== line % 2 && line !== 4 && line !== 3" style="max-width: 55px; max-height: 55px; margin: auto;" [src]="line < 4 ? 'assets/img/checkers_black.png' : 'assets/img/checkers_white.png'"/>
+            </div>
+        </div>
+    </div>
+    <div class = "container-none" style="height: 500px; width: 40%;">
+        <h1>Oh no! Something went horribly wrong!</h1>
+        <h4>Maybe you want to go back <a routerLink="/"
+                class="nav-link"
+                routerLinkActive="router-link-exact-active">home!
+            </a>
+        </h4>
+        <h4>Or... if you're curious... maybe <a class="nav-link" href="https://www.google.com/search?q=en+passant">google en passant?</a></h4>
+    </div>
 </div>

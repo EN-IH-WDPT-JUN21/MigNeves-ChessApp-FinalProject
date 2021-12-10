@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title" style = "font-family: 'Righteous'; color: #354855">Wish to join a game?</h4>
+      <h4 class="modal-title" id="modal-basic-title">Wish to join a game?</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -20,4 +20,4 @@
     </div>
   </ng-template>
   
-  <button class="btn btn-secondary" (click)="open(content)">Join Game</button>
+  <button class="btn btn-secondary btn-chess btn-chess-home" style="width: 100%;" (click)="open(content)">Join Game</button>

@@ -1,9 +1,10 @@
 import { iGameCreated } from '../../models/game-created.models';
-import { GameDatabaseService } from '../../game-database.service';
-import { Component, OnInit } from '@angular/core';
+import { GameDatabaseService } from '../../services/game-database.service';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { GameCreated } from '../../models/game-created.models';
 import { GameType } from '../../enums/game-type.enums';
 import { Router } from '@angular/router';
+import { BoardSettingsService } from 'src/app/services/board-settings.service';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +13,18 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  tileColors;
+  pieces;
+
   constructor(
     private gameService: GameDatabaseService,
-    private router: Router) { }
+    private router: Router,
+    private settingsService: BoardSettingsService) {
+      this.tileColors = settingsService.getTileColors();
+      this.pieces = settingsService.getPieces();
+    }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   async createGame(color: string) {

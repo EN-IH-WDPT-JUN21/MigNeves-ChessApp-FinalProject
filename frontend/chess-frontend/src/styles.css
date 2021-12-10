@@ -1,6 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body
 {
@@ -9,128 +10,67 @@ body
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;*/
-    background-color: #2e2e30;
+    background-color: #323f4b;
 }
 
-.fb-profile img.fb-image-lg{
-    z-index: 0;
-    width: 100%;  
-    margin-bottom: 10px;
+.btn-chess:hover {
+  background-color: #16a085;
 }
 
-.fb-image-profile
-{
-    margin: -90px 10px 20px 80px;
-    z-index: 9;
-    width: 20%; 
+.btn-chess:focus {
+  box-shadow: #64c7b3;
+  background-color: #1f2933;
+  border-color: #16a085;
 }
 
-/***
-Bootstrap Line Tabs by @keenthemes
-A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
-Licensed under MIT
-***/
-
-/* Tabs panel */
-.tabbable-panel {
-  border:1px solid #eee;
-  padding: 10px;
+.btn-chess {
+  background-color: #1f2933;
+  border-color: #1f2933;
 }
 
-/* Default mode */
-.tabbable-line > .nav-tabs {
-  border: none;
-  margin: 0px;
-}
-.tabbable-line > .nav-tabs > li {
-  margin-right: 2px;
-}
-.tabbable-line > .nav-tabs > li > a {
-  border: 0;
-  margin-right: 0;
-  color: #737373;
-}
-.tabbable-line > .nav-tabs > li > a > i {
-  color: #a6a6a6;
-}
-.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
-  border-bottom: 4px solid #fbcdcf;
-}
-.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
-  border: 0;
-  background: none !important;
-  color: #333333;
-}
-.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
-  color: #a6a6a6;
-}
-.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
-  margin-top: 0px;
-}
-.tabbable-line > .nav-tabs > li.active {
-  border-bottom: 4px solid #f3565d;
-  position: relative;
-}
-.tabbable-line > .nav-tabs > li.active > a {
-  border: 0 !important;
-  color: #333333;
-}
-.tabbable-line > .nav-tabs > li.active > a > i {
-  color: #404040;
-}
-.tabbable-line > .tab-content {
-  margin-top: -3px;
-  background-color: #fff;
-  border: 0;
-  border-top: 1px solid #eee;
-  padding: 15px 0;
-}
-.portlet .tabbable-line > .tab-content {
-  padding-bottom: 0;
+.btn-chess-home {
+  height: 225px;
+  margin: 0 12.5px;
+  font-size: 25px;
 }
 
-/* Below tabs mode */
-
-.tabbable-line.tabs-below > .nav-tabs > li {
-  border-top: 4px solid transparent;
-}
-.tabbable-line.tabs-below > .nav-tabs > li > a {
-  margin-top: 0;
-}
-.tabbable-line.tabs-below > .nav-tabs > li:hover {
-  border-bottom: 0;
-  border-top: 4px solid #fbcdcf;
-}
-.tabbable-line.tabs-below > .nav-tabs > li.active {
-  margin-bottom: -2px;
-  border-bottom: 0;
-  border-top: 4px solid #f3565d;
-}
-.tabbable-line.tabs-below > .tab-content {
-  margin-top: -10px;
-  border-top: 0;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
+.btn-chess:hover {
+  background-color: #16a085;
+  border-color: #16a085;
 }
 
-.menu_title {
-    padding: 15px 10px;
-    border-bottom: 1px solid #eee;
-    margin: 0 5px;
+.btn-chess:focus, .btn-chess.focus {
+  box-shadow: 0 0 0 3px #64c7b3;
 }
 
-
-@media (max-width:768px){
-    
-.fb-profile-text>h1{
-    font-weight: 700;
-    font-size:16px;
+.btn-chess.disabled, .btn-chess:disabled {
+  background-color: #1f2933b7;
+  border-color: #1f2933b7;
 }
 
-.fb-image-profile
-{
-    margin: -45px 10px 0px 25px;
-    z-index: 9;
-    width: 20%; 
+.btn-chess:active, .btn-chess.active,
+.show > .btn-chess.dropdown-toggle {
+  background-color: #16a085;
+  background-image: none;
+  border-color: #16a085;
 }
+
+router-outlet + * > * {
+  margin-top: 4%;
 }
+
+.nav-link{
+  /*font-weight: bold;*/
+  display: inline;
+  color: #1dc5a3;
+  margin-left: -14px;
+}
+
+.nav-link:hover{
+  /*font-weight: bold;*/
+  text-decoration-line: underline;
+  display: inline;
+  color: #30e0bd;
+  margin-left: -14px;
+}
+

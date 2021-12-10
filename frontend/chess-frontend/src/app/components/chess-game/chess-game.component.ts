@@ -1,6 +1,6 @@
 import { EndResult } from './../../enums/end-result.enums';
 import { Game } from '../../models/game.models';
-import { GameDatabaseService } from '../../game-database.service';
+import { GameDatabaseService } from '../../services/game-database.service';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxChessBoardService, PieceIconInput, NgxChessBoardComponent, NgxChessBoardView, HistoryMove } from 'ngx-chess-board';
@@ -39,9 +39,6 @@ export class ChessGameComponent implements OnInit {
 
   highlightedLightColor = "#829769";
   highlightedDarkColor = "#646f40";
-
-  lightTileMovedColor = "#cdd26a";
-  darkTileMovedColor = "#aaa23a";
 
   game!: Game;
   password!: string;

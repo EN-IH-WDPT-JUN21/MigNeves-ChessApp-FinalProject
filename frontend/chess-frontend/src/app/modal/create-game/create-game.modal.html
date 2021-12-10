@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title" style = "font-family: 'Righteous'; color: #354855">Which side do you want to play with?</h4>
+      <h4 class="modal-title" id="modal-basic-title">Which side do you want to play with?</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -8,7 +8,7 @@
     <div class="modal-body">
       <form>
         <div class="form-group">
-          <label for="name" style = "font-family: 'Roboto'; color: #354855">Color choice</label>
+          <label for="name">Color choice</label>
           <div class="input-group">
             <select  class="form-select" [(ngModel)]="color" name="color">
               <option [ngValue]="''" selected value="0">Choose a color to play...</option>
@@ -23,4 +23,4 @@
     </div>
   </ng-template>
   
-  <button class="btn btn-secondary" (click)="open(content)">Create Game</button>
+  <button class="btn btn-secondary btn-chess btn-chess-home" style="width: 100%;" (click)="open(content)">Create Game</button>
