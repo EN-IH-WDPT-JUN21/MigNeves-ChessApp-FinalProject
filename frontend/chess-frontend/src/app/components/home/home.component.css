@@ -1,0 +1,13 @@
+.alert {
+    margin-top: 25px;
+    margin-left: 40%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 20%;
+    font-size: 15px;
+}
+
+.alert button {
+    float: right;
+}

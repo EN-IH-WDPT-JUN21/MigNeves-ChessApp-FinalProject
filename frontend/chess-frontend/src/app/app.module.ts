@@ -12,9 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateGameModal } from './modal/create-game/create-game.modal';
 import { JoinGameModal } from './modal/join-game/join-game.modal';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HeaderComponent } from './header/header.component';
+import { NgbActiveModal, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeaderComponent } from './components/header/header.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ChessListComponent, ReplaceUnderscorePipe } from './components/chess-list/chess-list.component';
+import { GameResultModal } from './modal/game-result/game-result.modal';
+import { GameViewComponent } from './components/game-view/game-view.component';
 // import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
@@ -26,7 +29,11 @@ import { SettingsComponent } from './components/settings/settings.component';
     CreateGameModal,
     JoinGameModal,
     HeaderComponent,
-    SettingsComponent
+    SettingsComponent,
+    ChessListComponent,
+    GameResultModal,
+    ReplaceUnderscorePipe,
+    GameViewComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +42,11 @@ import { SettingsComponent } from './components/settings/settings.component';
     NgxChessBoardModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    NgbAlertModule
     //AuthRoutingModule
   ],
-  providers: [],
+  providers: [NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

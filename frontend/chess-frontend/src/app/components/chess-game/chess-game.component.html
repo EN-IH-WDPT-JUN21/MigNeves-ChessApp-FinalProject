@@ -1,4 +1,7 @@
-<ngx-chess-board #board [size]="600" [drawDisabled]="true" [showLastMove]="false" [lightTileColor]="lightTileColor" [darkTileColor]="darkTileColor" [pieceIcons]="pieceIcons" (moveChange)="moveDone()"></ngx-chess-board>
-<div class="container-none" *ngIf="opponentPassword != null">
-    <p>Join game with password: {{opponentPassword}}-{{gameId}}</p>
+<div *ngIf="game" class="d-flex flex-column align-items-center">
+    <ngx-chess-board #board [size]="innerWidth >= innerHeight ? 0.7 * (innerHeight - 75) : 0.7 * (innerWidth - 75)" [dragDisabled]="isMyTurn===false" [drawDisabled]="true" [showLastMove]="false" [lightTileColor]="tileColors[0]" [darkTileColor]="tileColors[1]" [pieceIcons]="pieces" [lightDisabled]="game == null || (game.colorWhite===false || isMyTurn===false)" [darkDisabled]="game == null || (game.colorWhite===true || isMyTurn===false)" (moveChange)="moveDone()"></ngx-chess-board>
+    <div class="d-flex justify-content-center password-container" [style.width]="innerWidth >= innerHeight ? (0.7 * (innerHeight - 75)).toString() + 'px' : (0.7 * (innerWidth - 75)).toString() + 'px'" *ngIf="opponentPassword != null">
+        <p>Join game as {{this.game.colorWhite ? "black" : "white"}}: <span>{{opponentPassword}}-{{gameId}}</span></p>
+        <button class="btn btn-secondary btn-chess" ngbTooltip="Copied to clipboard!" triggers="click:blur" (click)="copyPasswordToClipboard()">&emsp;&emsp;<i class="bi bi-clipboard" style="font-size: 20px;"></i></button>
+    </div>
 </div>

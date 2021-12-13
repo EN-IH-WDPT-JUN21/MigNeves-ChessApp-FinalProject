@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Game } from '../models/game.models';
+import { FinishedGames } from '../models/finished-games.mode';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,13 @@ export class GameDatabaseService {
 
   deleteGame(gameId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/game/${gameId}`);
+  }
+
+  getGamesFromKeys(keys: string): Observable<SimplifiedGame[]> {
+    return this.http.get<SimplifiedGame[]>(`${this.baseUrl}/game?keys=${keys}`);
+  }
+
+  getAllFinishedGames(page: number): Observable<FinishedGames> {
+    return this.http.get<FinishedGames>(`${this.baseUrl}/game?page=${page}`);
   }
 }

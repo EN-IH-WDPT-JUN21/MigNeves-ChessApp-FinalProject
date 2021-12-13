@@ -1,0 +1,14 @@
+<div *ngIf="games != null">
+    <div *ngFor="let game of games;" class="d-flex flex-row align-items-center game justify-content-between" (click)="goToGame(game.id)">
+        <div class="d-flex flex-row align-items-center">
+            <ngx-chess-board class="board" #board [size]="140" [drawDisabled]="true" [showCoords]="false" [showLastMove]="false" [showLegalMoves]="false" [lightTileColor]="tileColors[0]" [dragDisabled]="true" [lightDisabled]="true" [darkDisabled]="true" [showActivePiece]="false" [darkTileColor]="tileColors[1]" [pieceIcons]="pieces"></ngx-chess-board>
+            <div class="description">
+                <p *ngIf="true"><span>Result:</span> {{game.result | titlecase | replaceUnderscore}}</p>
+                <p><span>Number of moves:</span> {{game.numberMoves}}</p>
+                <p><span>Start date:</span> {{game.startDate | date: 'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
+        <button *ngIf="game.owner === true" (click)="deleteGame(game.id) ;$event.stopPropagation()" class="btn btn-danger delete"><i class="bi bi-trash"></i></button>
+    </div>
+    <div *ngIf="games.length === 0" class="game none">There are no games!</div>
+</div>

@@ -22,6 +22,7 @@ public class GameCreatedDTO {
     private Long blackPiecesPlayerId;
     private String whitePassword;
     private String blackPassword;
+    private Boolean whiteOwner;
 
     public static GameCreatedDTO GameToGameCreatedDTO(Game game) {
         return new GameCreatedDTO(
@@ -30,7 +31,8 @@ public class GameCreatedDTO {
                 game.getWhitePiecesPlayerId(),
                 game.getBlackPiecesPlayerId(),
                 game.getWhitePassword(),
-                game.getBlackPassword()
+                game.getBlackPassword(),
+                game.getWhiteOwner()
         );
     }
 }

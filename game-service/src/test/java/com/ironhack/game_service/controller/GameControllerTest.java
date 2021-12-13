@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,7 +70,8 @@ class GameControllerTest {
                 LocalDateTime.of(2021, 1, 6, 0, 0),
                 "AAAAAAAAAA",
                 "BBBBBBBBBB",
-                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3");
+                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3",
+                true);
 
         game2 = new Game(null,
                 GameType.UNKNOWN_UNKNOWN,
@@ -80,7 +82,8 @@ class GameControllerTest {
                 LocalDateTime.of(2021, 2, 9, 0, 0),
                 "CCCCCCCCCC",
                 "DDDDDDDDDD",
-                "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 1 2");
+                "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 1 2",
+                false);
         gameRepository.saveAll(List.of(game1, game2));
     }
 
@@ -149,7 +152,8 @@ class GameControllerTest {
                 new Game(
                         GameType.USER_USER,
                         1L,
-                        2L)
+                        2L,
+                        true)
         );
         MvcResult mvcResult = mockMvc.perform(post("/chess/game")
                 .contentType(MediaType.APPLICATION_JSON).content(body))
@@ -315,5 +319,27 @@ class GameControllerTest {
         mockMvc.perform(delete("/chess/game/1")).andExpect(status().isNoContent()).andReturn();
         mockMvc.perform(get("/chess/game").param("gameId", "1").param("password", "CCCCCCCCCC")).andExpect(status().isNotFound()).andReturn();
 
+    }
+
+    @Test
+    @DisplayName("Get games from valid keys")
+    void getGamesFromKeys_Valid() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/chess/game").param("keys", "AAAAAAAAAA-1,DDDDDDDDDD-2")).andExpect(status().isOk()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("DRAW"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("UNFINISHED"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-01-06T00:00:00"));
+    }
+
+    @Test
+    @DisplayName("Get games from invalid keys")
+    void getGamesFromKeys_Invalid() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/chess/game").param("keys", "WRONGPASSW-1,abc-def-gh-2,password12-5")).andExpect(status().isOk()).andReturn();
+
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("DRAW"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("UNFINISHED"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("2021-01-06T00:00:00"));
     }
 }

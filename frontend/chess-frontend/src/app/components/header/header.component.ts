@@ -9,7 +9,7 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('stickyMenu')
   menuElement!: ElementRef;
-  sticky: boolean = false;
+  sticky: boolean = true;
   elementPosition: any;
 
   constructor() {}
@@ -18,15 +18,5 @@ export class HeaderComponent implements OnInit {
 
   ngAfterViewInit(){
     this.elementPosition = this.menuElement.nativeElement.offsetTop;
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  handleScroll(){
-    //const windowScroll = window.pageYOffset;
-    if(window.scrollY >= 1){
-      this.sticky = true;
-    } else {
-      this.sticky = false;
-    }
   }
 }

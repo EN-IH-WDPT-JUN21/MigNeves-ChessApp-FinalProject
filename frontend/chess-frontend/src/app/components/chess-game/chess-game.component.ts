@@ -1,11 +1,15 @@
+import { GameResultModal } from './../../modal/game-result/game-result.modal';
+import { BoardSettingsService } from './../../services/board-settings.service';
 import { EndResult } from './../../enums/end-result.enums';
 import { Game } from '../../models/game.models';
 import { GameDatabaseService } from '../../services/game-database.service';
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NgxChessBoardService, PieceIconInput, NgxChessBoardComponent, NgxChessBoardView, HistoryMove } from 'ngx-chess-board';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxChessBoardService, PieceIconInput, NgxChessBoardView, HistoryMove } from 'ngx-chess-board';
 import { iMove, Move } from 'src/app/models/move.models';
 import { Piece } from 'src/app/enums/piece.enums';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-chess-game',
@@ -18,44 +22,69 @@ export class ChessGameComponent implements OnInit {
 
   @ViewChild('board', {static: false}) 
   board!: NgxChessBoardView;
-  
-  lightTileColor = "#f0d9b5";
-  darkTileColor = "#b58863";
-
-  pieceIcons: PieceIconInput = {
-    whiteKingUrl: "../assets/piece/cburnett/wK.svg",
-    whiteQueenUrl: "../assets/piece/cburnett/wQ.svg",
-    whiteKnightUrl: "../assets/piece/cburnett/wN.svg",
-    whiteRookUrl: "../assets/piece/cburnett/wR.svg", 
-    whitePawnUrl: "../assets/piece/cburnett/wP.svg",
-    whiteBishopUrl: "../assets/piece/cburnett/wB.svg",
-    blackKingUrl: "../assets/piece/cburnett/bK.svg",
-    blackQueenUrl: "../assets/piece/cburnett/bQ.svg",
-    blackKnightUrl: "../assets/piece/cburnett/bN.svg",
-    blackRookUrl: "../assets/piece/cburnett/bR.svg",
-    blackPawnUrl: "../assets/piece/cburnett/bP.svg",
-    blackBishopUrl: "../assets/piece/cburnett/bB.svg"
-  }
-
-  highlightedLightColor = "#829769";
-  highlightedDarkColor = "#646f40";
 
   game!: Game;
   password!: string;
   timeout!: any;
   isMyTurn: boolean = false;
-  gameId!: number
+  gameId!: number;
   opponentPassword!: string | null;
+  innerHeight: any;
+  innerWidth: any;
+  tileColors: string[];
+  pieces: PieceIconInput;
+  gameOver: boolean = false;
 
   constructor(
     private chessBoardService: NgxChessBoardService,
     private activatedRoute: ActivatedRoute,
-    private gameDatabaseService: GameDatabaseService) { }
+    private gameDatabaseService: GameDatabaseService,
+    private settingsService: BoardSettingsService,
+    private clipboard: Clipboard,
+    private modalService: NgbModal,
+    private router: Router) { 
+      this.tileColors = settingsService.getTileColors();
+      this.pieces = settingsService.getPieces();
+    }
 
   ngOnInit() {
     this.gameId = this.activatedRoute.snapshot.params['gameId'];
     this.opponentPassword = localStorage.getItem("game-opponent-psw-" + this.gameId);
     this.updateGame();
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timeout);
+  }
+
+  ngAfterViewInit() {
+    this.updateGame();
+  }
+
+  gameEnded() {
+    if (this.gameOver === false) {
+      this.gameOver = true;
+      const modalRef = this.modalService.open(GameResultModal);
+      modalRef.componentInstance.result = this.game.result;
+      modalRef.componentInstance.id = this.gameId;
+      modalRef.componentInstance.colorWhite = this.game.colorWhite; 
+      localStorage.removeItem('game-own-psw-' + this.gameId);
+      localStorage.removeItem('game-opponent-psw-' + this.gameId);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
+  }
+
+  copyPasswordToClipboard() {
+    if (this.opponentPassword != null) {
+      this.clipboard.copy(this.opponentPassword + "-" + this.gameId);
+    }
   }
 
   updateGame() {
@@ -64,27 +93,39 @@ export class ChessGameComponent implements OnInit {
       console.log(this.game.fen);
       if (this.game != null) {
         this.intervalManager();
-        this.board.setFEN(this.game.fen);
-        if (this.game.colorWhite === false) {
-          this.board.reverse();
+        if (this.board != null) {
+          this.board.setFEN(this.game.fen);
+          if (this.game.colorWhite === false) {
+            this.board.reverse();
+          }
+        }
+        if (this.game.result !== "UNFINISHED") {
+          this.gameEnded();
         }
       }
+    },
+    err => {
+      this.router.navigate(['/unauthorized']);
     });
   }
 
   intervalManager() {
-    if ((this.game.colorWhite === true && this.game.moves.length % 2 === 0) || (this.game.colorWhite === false && this.game.moves.length % 2 !== 0)) {
-      this.isMyTurn = true;
-      if (this.timeout != null) {
-        clearInterval(this.timeout);
-        this.timeout = null;
+    if (this.game.result === "UNFINISHED") {
+      if ((this.game.colorWhite === true && this.game.moves.length % 2 === 0) || (this.game.colorWhite === false && this.game.moves.length % 2 !== 0)) {
+        this.isMyTurn = true;
+        if (this.timeout != null) {
+          clearInterval(this.timeout);
+          this.timeout = null;
+        }
+      } else {
+        this.isMyTurn = false;
+        if (this.timeout == null) {
+          console.log("start interval")
+          this.timeout = setInterval(() => { this.updateGame(); }, 1000);
+        }
       }
     } else {
-      this.isMyTurn = false;
-      if (this.timeout == null) {
-        console.log("start interval")
-        this.timeout = setInterval(() => { this.updateGame(); }, 2000);
-      }
+      clearInterval(this.timeout);
     }
   }
 
@@ -103,6 +144,7 @@ export class ChessGameComponent implements OnInit {
 
   getMoveFromHistoryMove(historyMove: HistoryMove): Move {
     let endResult: EndResult;
+    console.log(historyMove)
     if (historyMove.mate === true) {
       endResult = historyMove.color === "white" ? EndResult.WHITE_WON : EndResult.BLACK_WON;
     } else if (historyMove.stalemate) {

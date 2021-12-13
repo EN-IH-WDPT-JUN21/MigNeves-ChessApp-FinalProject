@@ -23,6 +23,8 @@ public class SimplifiedGameDTO {
     private Integer numberMoves;
     private EndResult result;
     private LocalDateTime startDate;
+    private String fen;
+    private Boolean owner;
 
     public static SimplifiedGameDTO GameToSimplifiedGameDTO(Game game) {
         int moves = game.getHalfMoves() % 2 == 0 ? game.getHalfMoves() / 2 : (game.getHalfMoves() + 1) / 2;
@@ -33,7 +35,9 @@ public class SimplifiedGameDTO {
                 game.getBlackPiecesPlayerId(),
                 moves,
                 game.getResult(),
-                game.getStartDate()
+                game.getStartDate(),
+                game.getFen(),
+                false
         );
     }
 }

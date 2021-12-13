@@ -1,0 +1,33 @@
+.password-container {
+    margin-top: 25px;
+    height: 50px;
+    background-color: #1f2933;
+    border-radius: 7px;
+}
+
+.password-container p {
+    font-size: 20px;
+    color: #f5f7fa;
+    margin:auto;
+    line-height: 45px;
+}
+
+.password-container p span {
+    color: #30e0bd;
+}
+
+.password-container p .btn-chess {
+    background-color: #323f4b;
+}
+
+.password-container p .btn-chess:hover {
+    background-color: #16a085;
+}
+
+.btn-chess:active, .btn-chess.active,
+.show > .btn-chess.dropdown-toggle {
+    background-color: #16a085;
+    background-image: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 3px #64c7b3;
+}

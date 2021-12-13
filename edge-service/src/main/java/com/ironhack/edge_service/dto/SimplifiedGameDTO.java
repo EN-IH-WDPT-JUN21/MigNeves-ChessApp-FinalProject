@@ -21,4 +21,6 @@ public class SimplifiedGameDTO {
     private Integer numberMoves;
     private EndResult result;
     private LocalDateTime startDate;
+    private String fen;
+    private Boolean owner;
 }

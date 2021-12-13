@@ -6,11 +6,8 @@
 body
 {
     font-family: 'Open Sans', sans-serif;
-    /*background-image: url("assets/img/screen_wide.png");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;*/
     background-color: #323f4b;
+    margin-top: 125px;
 }
 
 .btn-chess:hover {
@@ -73,4 +70,3 @@ router-outlet + * > * {
   color: #30e0bd;
   margin-left: -14px;
 }
-

@@ -1,10 +1,8 @@
 package com.ironhack.game_service.service;
 
 import com.ironhack.game_service.dao.Game;
-import com.ironhack.game_service.dto.GameCreatedDTO;
-import com.ironhack.game_service.dto.GameDTO;
-import com.ironhack.game_service.dto.MoveDTO;
-import com.ironhack.game_service.dto.SimplifiedGameDTO;
+import com.ironhack.game_service.dto.*;
+import com.ironhack.game_service.enums.EndResult;
 import com.ironhack.game_service.proxy.MoveProxy;
 import com.ironhack.game_service.repository.GameRepository;
 import com.ironhack.game_service.utils.MoveServiceMock;
@@ -14,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +53,7 @@ public class GameService {
     public GameCreatedDTO addGame(GameCreatedDTO gameDTO) {
         Game game;
         try {
-            game = new Game(gameDTO.getGameType(), gameDTO.getWhitePiecesPlayerId(), gameDTO.getBlackPiecesPlayerId());
+            game = new Game(gameDTO.getGameType(), gameDTO.getWhitePiecesPlayerId(), gameDTO.getBlackPiecesPlayerId(), gameDTO.getWhiteOwner());
         } catch (ResponseStatusException e) {
             throw new ResponseStatusException(e.getStatus(), e.getMessage());
         }
@@ -102,5 +98,51 @@ public class GameService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no game with id " + gameID);
         }
+    }
+
+    public List<SimplifiedGameDTO> getGamesFromKeys(String[] keys) {
+        Map<Long, String> passwords = new HashMap<>();
+        List<Long> ids = new ArrayList<>();
+        List<Game> games = new ArrayList<>();
+        for (String key : keys) {
+            String[] passwordComponents = key.split("-");
+            if (passwordComponents.length == 2) {
+                String password = passwordComponents[0];
+                Long id;
+                try {
+                    id = Long.valueOf(passwordComponents[1]);
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+                passwords.put(id, password);
+                ids.add(id);
+            }
+            games = gameRepository.findByIdInOrderByStartDateDesc(ids);
+            games.removeIf(game -> !game.getWhitePassword().equals(passwords.get(game.getId())) && !game.getBlackPassword().equals(passwords.get(game.getId())));
+        }
+
+        List<SimplifiedGameDTO> simplfiedGames = new ArrayList<>();
+        for (Game game : games) {
+            SimplifiedGameDTO simplfiedGame = SimplifiedGameDTO.GameToSimplifiedGameDTO(game);
+            if ((game.getWhiteOwner() && game.getWhitePassword().equals(passwords.get(game.getId()))) ||
+                    (!game.getWhiteOwner() && game.getBlackPassword().equals(passwords.get(game.getId())))) {
+                simplfiedGame.setOwner(true);
+            }
+            simplfiedGames.add(simplfiedGame);
+        }
+        return simplfiedGames;
+    }
+
+    public FinishedGamesDTO getAllFinishedGames(int page) {
+        List<Game> games = gameRepository.findByResultNotOrderByStartDateDesc(EndResult.UNFINISHED);
+        int pages = games.size() % 10 == 0 ? games.size() / 10 : games.size() / 10 + 1;
+        if (page > pages || page <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This page does not exist");
+        }
+        List<SimplifiedGameDTO> simplifiedGames = new ArrayList<>();
+        for (int i = (page - 1) * 10; (i < (page-1)*10 + 10 && i < games.size()); i++){
+            simplifiedGames.add(SimplifiedGameDTO.GameToSimplifiedGameDTO(games.get(i)));
+        }
+        return new FinishedGamesDTO(simplifiedGames, pages);
     }
 }

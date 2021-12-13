@@ -1,5 +1,6 @@
 package com.ironhack.game_service.controller;
 
+import com.ironhack.game_service.dto.FinishedGamesDTO;
 import com.ironhack.game_service.dto.GameCreatedDTO;
 import com.ironhack.game_service.dto.GameDTO;
 import com.ironhack.game_service.dto.SimplifiedGameDTO;
@@ -26,6 +27,12 @@ public class GameController {
         return gameService.getGamesFromUser(userId);
     }
 
+    @GetMapping(path = "", params = {"keys"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<SimplifiedGameDTO> getGamesFromKeys(@PathParam("keys") String[] keys) {
+        return gameService.getGamesFromKeys(keys);
+    }
+
     @GetMapping(path = "", params = {"gameId", "password"})
     @ResponseStatus(HttpStatus.OK)
     public GameDTO getGameFromId(@PathParam("gameId") Long gameId, @PathParam("password") String password) {
@@ -50,4 +57,9 @@ public class GameController {
         gameService.deleteGame(gameId);
     }
 
+    @GetMapping(path = "", params = {"page"})
+    @ResponseStatus(HttpStatus.OK)
+    public FinishedGamesDTO getAllFinishedGames(@PathParam("page") int page) {
+        return gameService.getAllFinishedGames(page);
+    }
 }

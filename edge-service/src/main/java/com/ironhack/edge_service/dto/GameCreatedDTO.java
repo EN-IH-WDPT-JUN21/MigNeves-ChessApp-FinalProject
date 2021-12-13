@@ -20,4 +20,5 @@ public class GameCreatedDTO {
     private Long blackPiecesPlayerId;
     private String whitePassword;
     private String blackPassword;
+    private Boolean whiteOwner;
 }

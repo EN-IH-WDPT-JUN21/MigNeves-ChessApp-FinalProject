@@ -36,9 +36,11 @@ public class Game {
     private String whitePassword;
     private String blackPassword;
     private String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    private Boolean whiteOwner;
 
-    public Game(GameType gameType, Long whitePiecesPlayerId, Long blackPiecesPlayerId) {
+    public Game(GameType gameType, Long whitePiecesPlayerId, Long blackPiecesPlayerId, Boolean whiteOwner) {
         setGameType(gameType);
+        setWhiteOwner(whiteOwner);
         switch (gameType) {
             case UNKNOWN_UNKNOWN -> {
                 setWhitePiecesPlayerId(null);

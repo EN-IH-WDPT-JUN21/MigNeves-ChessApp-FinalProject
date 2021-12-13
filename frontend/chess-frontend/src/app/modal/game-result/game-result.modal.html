@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">Game over!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p *ngIf="(result === 'WHITE_WON' && colorWhite === true) || (result === 'BLACK_WON' && colorWhite === false)">Congratulations, you have <span style="color: #27ae60;">WON</span>!</p>
+    <p *ngIf="(result === 'WHITE_WON' && colorWhite === false) || (result === 'BLACK_WON' && colorWhite === true)">Unfortunately you <span style="color: #c0392b;">LOST</span>! Better luck next time!</p>
+    <p *ngIf="result === 'DRAW'">It's a draw!</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)=rerouteView()>View game</button>
+    <button type="button" class="btn btn-outline-dark" (click)="rerouteHome()">Home</button>
+</div>

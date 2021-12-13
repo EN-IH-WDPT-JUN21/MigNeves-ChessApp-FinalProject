@@ -1,5 +1,6 @@
 package com.ironhack.edge_service.controller;
 
+import com.ironhack.edge_service.dto.FinishedGamesDTO;
 import com.ironhack.edge_service.dto.GameCreatedDTO;
 import com.ironhack.edge_service.dto.GameDTO;
 import com.ironhack.edge_service.dto.SimplifiedGameDTO;
@@ -32,7 +33,8 @@ public class EdgeController {
 
     @PostMapping("/chess/game")
     @ResponseStatus(HttpStatus.CREATED)
-    private GameCreatedDTO addGame(@RequestBody GameDTO gameDTO) {
+    private GameCreatedDTO addGame(@RequestBody GameCreatedDTO gameDTO) {
+        System.out.println(gameDTO);
         return gameProxy.addGame(gameDTO);
     }
 
@@ -46,5 +48,17 @@ public class EdgeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     private void deleteGame(@PathVariable("gameId") Long gameId) {
         gameProxy.deleteGame(gameId);
+    }
+
+    @GetMapping(path = "/chess/game", params = {"keys"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<SimplifiedGameDTO> getGamesFromKeys(@PathParam("keys") String[] keys) {
+        return gameProxy.getGamesFromKeys(keys);
+    }
+
+    @GetMapping(path = "/chess/game", params = {"page"})
+    @ResponseStatus(HttpStatus.OK)
+    public FinishedGamesDTO getAllFinishedGames(@PathParam("page") int page) {
+        return gameProxy.getAllFinishedGames(page);
     }
 }

@@ -6,7 +6,9 @@ export interface iSimplifiedGame {
     gameType: GameType,
     numberMoves: number,
     result: EndResult,
-    startDate: Date
+    startDate: Date,
+    fen: string,
+    owner: boolean
 }
 
 export class SimplifiedGame {
@@ -15,6 +17,8 @@ export class SimplifiedGame {
     numberMoves!: number;
     result!: EndResult;
     startDate!: Date;
+    fen!: string;
+    owner!: boolean;
 
     constructor(rawData: any) {
         Object.assign(this, rawData);

@@ -1,0 +1,35 @@
+.game {
+    background-color: #1f2933;
+    width: 70%;
+    border-radius: 7px;
+    margin-bottom: 25px;
+    margin: 25px auto 0px auto;
+    height: 180px;
+}
+
+.none {
+    font-size: 25px;
+    color: #f5f7fa;
+    text-align: center;
+    line-height: 170px;
+}
+
+.board {
+    margin-left: 20px;
+}
+
+.description {
+    margin-left: 50px;
+    font-size: 20px;
+    color: #f5f7fa;
+}
+
+.delete {
+    justify-self: flex-end;
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+span {
+    color: #1dc5a3;
+}
