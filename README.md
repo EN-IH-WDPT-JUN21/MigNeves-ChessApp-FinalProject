@@ -57,3 +57,6 @@ A player can view a list of all finished games through the button **Finished Gam
 
 ### Settings
 A player can change the board color and the set of pieces in the settings page.
+
+# Thank You!
+P.S. Don't forget to try a nonexistent route, you might be surprised...
