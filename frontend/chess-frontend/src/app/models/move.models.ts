@@ -8,7 +8,8 @@ export interface iMove {
     piece: Piece,
     capture: boolean,
     inCheck: boolean,
-    result: EndResult
+    result: EndResult,
+    fen: string
 }
 
 export class Move {
@@ -19,6 +20,7 @@ export class Move {
     capture!: boolean;
     inCheck!: boolean;
     result!: EndResult;
+    fen!: string;
 
     constructor(rawData: any) {
         Object.assign(this, rawData);

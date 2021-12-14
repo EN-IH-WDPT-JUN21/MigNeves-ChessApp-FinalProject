@@ -1,1 +1,7 @@
-<p>game-view works!</p>
+<div *ngIf="game" class="d-flex flex-column align-items-center">
+    <ngx-chess-board #board [size]="innerWidth >= innerHeight ? 0.7 * (innerHeight - 75) : 0.7 * (innerWidth - 75)" [dragDisabled]="true" [drawDisabled]="true" [showLastMove]="false" [lightTileColor]="tileColors[0]" [darkTileColor]="tileColors[1]" [pieceIcons]="pieces" [lightDisabled]="true" [darkDisabled]="true"></ngx-chess-board>
+    <div class="d-flex justify-content-between move-container" [style.width]="innerWidth >= innerHeight ? (0.7 * (innerHeight - 75)).toString() + 'px' : (0.7 * (innerWidth - 75)).toString() + 'px'">
+        <button class="btn btn-secondary btn-chess" [disabled]="moveIndex === -1" (click)="previousMove()"><i class="bi bi-caret-left-fill"></i></button>
+        <button class="btn btn-secondary btn-chess" [disabled]="moveIndex === (game.length - 1)"  (click)="nextMove()"><i class="bi bi-caret-right-fill"></i></button>
+    </div>
+</div>

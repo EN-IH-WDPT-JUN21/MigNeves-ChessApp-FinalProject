@@ -1,10 +1,7 @@
-import { FinishedGames } from './../../models/finished-games.mode';
-import { NgbAlert, NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import { iGameCreated } from '../../models/game-created.models';
 import { GameDatabaseService } from '../../services/game-database.service';
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { GameCreated } from '../../models/game-created.models';
-import { GameType } from '../../enums/game-type.enums';
 import { Router } from '@angular/router';
 import { BoardSettingsService } from 'src/app/services/board-settings.service';
 import { NgxChessBoardView } from 'ngx-chess-board';
@@ -60,7 +57,6 @@ export class HomeComponent implements OnInit {
       }
   
       let createGame: iGameCreated = {
-        gameType: GameType.UNKNOWN_UNKNOWN,
         whiteOwner: color === "White" ? true : false
       }
   
@@ -107,6 +103,7 @@ export class HomeComponent implements OnInit {
   }
 
   finishedGames() {
+    localStorage.removeItem('move');
     this.router.navigate(['/finished', 1]);
   }
 }

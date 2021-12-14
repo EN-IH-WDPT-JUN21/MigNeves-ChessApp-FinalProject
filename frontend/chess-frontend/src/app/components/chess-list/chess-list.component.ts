@@ -91,7 +91,12 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
   }
 
   goToGame(id: number) {
-    this.router.navigate(['/game/', id]);
+    if (this.listType === "open") {
+      this.router.navigate(['/game/', id]);
+    } else {
+      this.router.navigate(['/view', id]);
+    }
+    
   }
 }
 

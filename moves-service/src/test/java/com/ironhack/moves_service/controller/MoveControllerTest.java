@@ -67,16 +67,16 @@ class MoveControllerTest {
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        ruyLopez1 = new Move(1L, "e2e4", Piece.WHITE_PAWN, false, false, EndResult.UNFINISHED);
-        ruyLopez2 = new Move(1L, "e7e5", Piece.BLACK_PAWN, false, false, EndResult.UNFINISHED);
-        ruyLopez3 = new Move(1L, "g1f3", Piece.WHITE_KNIGHT, false, false, EndResult.UNFINISHED);
-        ruyLopez4 = new Move(1L, "b8c6", Piece.BLACK_KNIGHT, false, false, EndResult.UNFINISHED);
-        ruyLopez5 = new Move(1L, "f1b5", Piece.WHITE_BISHOP, false, false, EndResult.UNFINISHED);
+        ruyLopez1 = new Move(1L, "e2e4", Piece.WHITE_PAWN, false, false, EndResult.UNFINISHED, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        ruyLopez2 = new Move(1L, "e7e5", Piece.BLACK_PAWN, false, false, EndResult.UNFINISHED, "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2");
+        ruyLopez3 = new Move(1L, "g1f3", Piece.WHITE_KNIGHT, false, false, EndResult.UNFINISHED, "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2");
+        ruyLopez4 = new Move(1L, "b8c6", Piece.BLACK_KNIGHT, false, false, EndResult.UNFINISHED, "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3");
+        ruyLopez5 = new Move(1L, "f1b5", Piece.WHITE_BISHOP, false, false, EndResult.UNFINISHED, "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3");
 
-        bongCloud1 = new Move(2L, "e2e4", Piece.WHITE_PAWN, false, false, EndResult.UNFINISHED);
-        bongCloud2 = new Move(2L, "e7e5", Piece.BLACK_PAWN, false, false, EndResult.UNFINISHED);
-        bongCloud3 = new Move(2L, "e1e2", Piece.WHITE_KING, false, false, EndResult.UNFINISHED);
-        bongCloud4 = new Move(2L, "e8e7", Piece.BLACK_KING, false, false, EndResult.DRAW);
+        bongCloud1 = new Move(2L, "e2e4", Piece.WHITE_PAWN, false, false, EndResult.UNFINISHED, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        bongCloud2 = new Move(2L, "e7e5", Piece.BLACK_PAWN, false, false, EndResult.UNFINISHED, "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2");
+        bongCloud3 = new Move(2L, "e1e2", Piece.WHITE_KING, false, false, EndResult.UNFINISHED, "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 1 2");
+        bongCloud4 = new Move(2L, "e8e7", Piece.BLACK_KING, false, false, EndResult.DRAW, "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3");
 
         moveRepository.saveAll(List.of(ruyLopez1, ruyLopez2, ruyLopez3, ruyLopez4, ruyLopez5, bongCloud1, bongCloud2, bongCloud3, bongCloud4));
     }
@@ -119,7 +119,8 @@ class MoveControllerTest {
                         Piece.WHITE_BISHOP,
                         true,
                         false,
-                        EndResult.UNFINISHED
+                        EndResult.UNFINISHED,
+                        ""
                 )
         );
 
@@ -135,7 +136,8 @@ class MoveControllerTest {
                         Piece.BLACK_KING,
                         false,
                         false,
-                        EndResult.UNFINISHED
+                        EndResult.UNFINISHED,
+                        ""
                 )
         );
 
@@ -151,7 +153,8 @@ class MoveControllerTest {
                         Piece.WHITE_KING,
                         false,
                         false,
-                        EndResult.UNFINISHED
+                        EndResult.UNFINISHED,
+                        ""
                 )
         );
 
@@ -171,7 +174,8 @@ class MoveControllerTest {
                         Piece.BLACK_PAWN,
                         false,
                         false,
-                        EndResult.UNFINISHED
+                        EndResult.UNFINISHED,
+                        ""
                 )
         );
 
@@ -186,6 +190,7 @@ class MoveControllerTest {
     }
 
     @Test
+    @DisplayName("Delete moves from game")
     void deleteMovesFromGame() throws Exception {
         mockMvc.perform(delete("/chess/move/2")).andExpect(status().isNoContent()).andReturn();
         MvcResult mvcResult =  mockMvc.perform(get("/chess/move/2")).andExpect(status().isOk()).andReturn();
@@ -198,5 +203,13 @@ class MoveControllerTest {
         assertFalse(mvcResult.getResponse().getContentAsString().contains("BLACK_PAWN"));
         assertFalse(mvcResult.getResponse().getContentAsString().contains("WHITE_KING"));
         assertFalse(mvcResult.getResponse().getContentAsString().contains("BLACK_KING"));
+    }
+
+    @Test
+    @DisplayName("Get last fen element")
+    void getLastFen() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/chess/move/fen/1")).andExpect(status().isOk()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3"));
     }
 }

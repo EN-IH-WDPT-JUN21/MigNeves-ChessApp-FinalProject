@@ -1,8 +1,5 @@
-import { GameType } from './../enums/game-type.enums';
-
 export interface iGameCreated {
     id?: number,
-    gameType: GameType,
     whitePassword?: string,
     blackPassword?: string,
     whiteOwner: boolean
@@ -10,7 +7,6 @@ export interface iGameCreated {
 
 export class GameCreated {
     id!: number;
-    gameType!: GameType;
     whitePassword!: string;
     blackPassword!: string;
     whiteOwner!: boolean;

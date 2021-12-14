@@ -17,11 +17,15 @@ export class GameResultModal {
 
   rerouteView() {
       this.activeModal.close('Close click');
-      this.router.navigate(['/game/view/', this.id])
+      localStorage.removeItem('game-own-psw-' + this.id);
+      localStorage.removeItem('game-opponent-psw-' + this.id);
+      this.router.navigate(['/view/', this.id])
   }
 
   rerouteHome() {
     this.activeModal.close('Close click');
+    localStorage.removeItem('game-own-psw-' + this.id);
+    localStorage.removeItem('game-opponent-psw-' + this.id);
     this.router.navigate(['/']);
   }
 }

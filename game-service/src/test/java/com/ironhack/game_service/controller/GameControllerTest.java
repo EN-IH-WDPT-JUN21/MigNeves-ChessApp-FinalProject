@@ -5,7 +5,6 @@ import com.ironhack.game_service.dao.Game;
 import com.ironhack.game_service.dto.GameDTO;
 import com.ironhack.game_service.dto.MoveDTO;
 import com.ironhack.game_service.enums.EndResult;
-import com.ironhack.game_service.enums.GameType;
 import com.ironhack.game_service.enums.Piece;
 import com.ironhack.game_service.repository.GameRepository;
 import org.junit.jupiter.api.*;
@@ -19,11 +18,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -62,27 +59,19 @@ class GameControllerTest {
         objectMapper.findAndRegisterModules();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         game1 = new Game(null,
-                GameType.UNKNOWN_UNKNOWN,
-                1L,
-                2L,
                 4,
                 EndResult.DRAW,
                 LocalDateTime.of(2021, 1, 6, 0, 0),
                 "AAAAAAAAAA",
                 "BBBBBBBBBB",
-                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3",
                 true);
 
         game2 = new Game(null,
-                GameType.UNKNOWN_UNKNOWN,
-                1L,
-                2L,
                 3,
                 EndResult.UNFINISHED,
                 LocalDateTime.of(2021, 2, 9, 0, 0),
                 "CCCCCCCCCC",
                 "DDDDDDDDDD",
-                "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR b kq - 1 2",
                 false);
         gameRepository.saveAll(List.of(game1, game2));
     }
@@ -93,20 +82,6 @@ class GameControllerTest {
     }
 
     @Test
-    @DisplayName("Get games from user id")
-    void getGamesFromUser() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/chess/game")
-                .param("userId", "1"))
-                .andExpect(status().isOk()).andReturn();
-
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("UNKNOWN_UNKNOWN"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("UNFINISHED"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("DRAW"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-01-06T00:00:00"));
-    }
-
-    @Test
     @DisplayName("Get game from game id")
     void getGameFromId_Valid() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/chess/game")
@@ -114,7 +89,6 @@ class GameControllerTest {
                 .param("password", "AAAAAAAAAA"))
                 .andExpect(status().isOk()).andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("UNKNOWN_UNKNOWN"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("DRAW"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-01-06T00:00:00"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("e2e4"));
@@ -149,20 +123,11 @@ class GameControllerTest {
     @DisplayName("Add a new game")
     void addGame() throws Exception {
         String body = objectMapper.writeValueAsString(
-                new Game(
-                        GameType.USER_USER,
-                        1L,
-                        2L,
-                        true)
+                new Game(true)
         );
         MvcResult mvcResult = mockMvc.perform(post("/chess/game")
                 .contentType(MediaType.APPLICATION_JSON).content(body))
                 .andExpect(status().isCreated()).andReturn();
-
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("USER_USER"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("1"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("2"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("3"));
     }
 
     @Test
@@ -171,53 +136,6 @@ class GameControllerTest {
         String body = objectMapper.writeValueAsString(
                 new GameDTO(
                         2L,
-                        GameType.UNKNOWN_UNKNOWN,
-                        null,
-                        null,
-                        EndResult.UNFINISHED,
-                        null,
-                        new ArrayList<>(),
-                        new MoveDTO(
-                            null,
-                            2L,
-                            "e8e7",
-                            Piece.BLACK_KING,
-                            false,
-                            false,
-                            EndResult.DRAW
-                        ),
-                        "DDDDDDDDDD",
-                        false,
-                        "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
-                )
-        );
-
-        MvcResult mvcResult = mockMvc.perform(put("/chess/game")
-            .content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
-
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("UNKNOWN_UNKNOWN"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("DRAW"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("e2e4"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("e7e5"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("e1e2"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("e8e7"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("WHITE_PAWN"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("BLACK_PAWN"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("WHITE_KING"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("BLACK_KING"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
-    }
-
-    @Test
-    @DisplayName("Invalid update")
-    void updateGame_InvalidUpdate() throws Exception {
-        String body = objectMapper.writeValueAsString(
-                new GameDTO(
-                        1L,
-                        GameType.UNKNOWN_UNKNOWN,
-                        null,
-                        null,
                         EndResult.UNFINISHED,
                         null,
                         new ArrayList<>(),
@@ -228,11 +146,50 @@ class GameControllerTest {
                                 Piece.BLACK_KING,
                                 false,
                                 false,
-                                EndResult.DRAW
+                                EndResult.DRAW,
+                                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
                         ),
                         "DDDDDDDDDD",
-                        false,
-                        "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
+                        false
+                )
+        );
+
+        MvcResult mvcResult = mockMvc.perform(put("/chess/game")
+                .content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("DRAW"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("e2e4"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("e7e5"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("e1e2"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("e8e7"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("WHITE_PAWN"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BLACK_PAWN"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("WHITE_KING"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BLACK_KING"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
+    }
+
+    @Test
+    @DisplayName("Invalid update")
+    void updateGame_InvalidUpdate() throws Exception {
+        String body = objectMapper.writeValueAsString(
+                new GameDTO(
+                        1L,
+                        EndResult.UNFINISHED,
+                        null,
+                        new ArrayList<>(),
+                        new MoveDTO(
+                                null,
+                                2L,
+                                "e8e7",
+                                Piece.BLACK_KING,
+                                false,
+                                false,
+                                EndResult.DRAW,
+                                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
+                        ),
+                        "DDDDDDDDDD",
+                        false
                 )
         );
 
@@ -242,9 +199,6 @@ class GameControllerTest {
         body = objectMapper.writeValueAsString(
                 new GameDTO(
                         1L,
-                        GameType.UNKNOWN_UNKNOWN,
-                        null,
-                        null,
                         EndResult.UNFINISHED,
                         null,
                         new ArrayList<>(),
@@ -255,11 +209,11 @@ class GameControllerTest {
                                 Piece.BLACK_KING,
                                 false,
                                 false,
-                                EndResult.DRAW
+                                EndResult.DRAW,
+                                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
                         ),
                         "DDDDDDDDDD",
-                        false,
-                        "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
+                        false
                 )
         );
 
@@ -269,9 +223,6 @@ class GameControllerTest {
         body = objectMapper.writeValueAsString(
                 new GameDTO(
                         3L,
-                        GameType.UNKNOWN_UNKNOWN,
-                        null,
-                        null,
                         EndResult.UNFINISHED,
                         null,
                         new ArrayList<>(),
@@ -282,11 +233,11 @@ class GameControllerTest {
                                 Piece.BLACK_KING,
                                 false,
                                 false,
-                                EndResult.DRAW
+                                EndResult.DRAW,
+                                "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
                         ),
                         "DDDDDDDDDD",
-                        false,
-                        "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
+                        false
                 )
         );
 
@@ -296,16 +247,12 @@ class GameControllerTest {
         body = objectMapper.writeValueAsString(
                 new GameDTO(
                         2L,
-                        GameType.UNKNOWN_UNKNOWN,
-                        null,
-                        null,
                         EndResult.UNFINISHED,
                         null,
                         new ArrayList<>(),
                         null,
                         "DDDDDDDDDD",
-                        false,
-                        "rnbq1bnr/ppppkppp/8/4p3/4P3/8/PPPPKPPP/RNBQ1BNR w - - 2 3"
+                        false
                 )
         );
 
@@ -341,5 +288,16 @@ class GameControllerTest {
         assertFalse(mvcResult.getResponse().getContentAsString().contains("UNFINISHED"));
         assertFalse(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
         assertFalse(mvcResult.getResponse().getContentAsString().contains("2021-01-06T00:00:00"));
+    }
+
+    @Test
+    @DisplayName("Get all finished games")
+    void getFinishedGames() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/chess/game").param("page", "1")).andExpect(status().isOk()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("DRAW"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("UNFINISHED"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("2021-02-09T00:00:00"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("2021-01-06T00:00:00"));
     }
 }

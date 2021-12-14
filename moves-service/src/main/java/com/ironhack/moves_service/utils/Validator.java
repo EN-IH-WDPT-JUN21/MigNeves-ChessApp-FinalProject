@@ -19,6 +19,7 @@ public class Validator {
         this.moveRepository = moveRepository;
     }
 
+    // Validate move color (moves should alternate as white and black) and validate if game ended
     public void validateMove(MoveDTO moveDTO) {
         List<Move> moves = moveRepository.findByGameIdOrderByIdAsc(moveDTO.getGameId());
         try {
@@ -31,6 +32,7 @@ public class Validator {
         }
     }
 
+    // Validate color. If the current halfMove number is pair it should be white to play
     private void validateColor(MoveDTO moveDTO, long numHalfMoves) {
         if (numHalfMoves % 2 == 0) {
             if (moveDTO.getPiece().toString().startsWith("BLACK_")) {
@@ -43,6 +45,7 @@ public class Validator {
         }
     }
 
+    // If the game has ended there can no longer be added any more moves
     private void validateGameEnded(Move move) {
         if (!move.getResult().equals(EndResult.UNFINISHED)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The game has ended, no more moves allowed!");

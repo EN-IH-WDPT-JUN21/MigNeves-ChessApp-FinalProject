@@ -31,3 +31,19 @@
     border-color: #16a085;
     box-shadow: 0 0 0 3px #64c7b3;
 }
+
+.popover {
+    max-height: 50px;
+}
+
+.turn {
+    margin-top: 8px;
+    margin-left: 8px;
+    font-size: 20px;
+    height: 20px;
+    color: #f5f7fa96;
+}
+
+.turn:hover {
+    color: #f5f7fa;
+}

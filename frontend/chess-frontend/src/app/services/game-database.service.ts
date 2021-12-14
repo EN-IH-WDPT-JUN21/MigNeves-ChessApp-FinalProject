@@ -1,3 +1,4 @@
+import { Move } from './../models/move.models';
 import { GameCreated } from '../models/game-created.models';
 import { SimplifiedGame } from '../models/simplified-game-models';
 import { Observable } from 'rxjs';
@@ -41,5 +42,9 @@ export class GameDatabaseService {
 
   getAllFinishedGames(page: number): Observable<FinishedGames> {
     return this.http.get<FinishedGames>(`${this.baseUrl}/game?page=${page}`);
+  }
+
+  getMovesFromGame(gameId: number): Observable<Move[]> {
+    return this.http.get<Move[]>(`${this.baseUrl}/move/${gameId}`);
   }
 }

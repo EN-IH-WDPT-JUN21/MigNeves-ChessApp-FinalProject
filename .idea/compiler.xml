@@ -10,14 +10,15 @@
         <module name="moves-service" />
         <module name="game-service" />
         <module name="edge-service" />
+        <module name="draw-service" />
         <module name="discovery" />
-        <module name="user-service" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth-service" target="17" />
       <module name="discovery" target="17" />
+      <module name="draw-service" target="17" />
       <module name="edge-service" target="17" />
       <module name="game-service" target="17" />
       <module name="gateway" target="17" />
@@ -30,6 +31,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="auth-service" options="-parameters" />
       <module name="discovery" options="-parameters" />
+      <module name="draw-service" options="-parameters" />
       <module name="edge-service" options="-parameters" />
       <module name="game-service" options="-parameters" />
       <module name="gateway" options="-parameters" />

@@ -29,6 +29,8 @@ public class MoveDTO {
     private Boolean inCheck;
     @NotNull
     private EndResult result;
+    @NotNull
+    private String fen;
 
     public static MoveDTO moveToMoveDTO(Move move) {
         return new MoveDTO(
@@ -38,7 +40,8 @@ public class MoveDTO {
                 move.getPiece(),
                 move.getCapture(),
                 move.getInCheck(),
-                move.getResult()
+                move.getResult(),
+                move.getFen()
         );
     }
 }

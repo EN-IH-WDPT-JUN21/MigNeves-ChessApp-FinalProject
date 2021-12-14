@@ -15,9 +15,6 @@ import java.util.UUID;
 @FeignClient("game-service")
 public interface GameProxy {
 
-    @GetMapping(path = "/chess/game", params = {"userId"})
-    List<SimplifiedGameDTO> getGamesFromUser(@RequestParam("userId") Long userId);
-
     @GetMapping(path = "/chess/game", params = {"gameId", "password"})
     GameDTO getGameFromId(@RequestParam("gameId") Long gameId, @RequestParam("password") String password);
 

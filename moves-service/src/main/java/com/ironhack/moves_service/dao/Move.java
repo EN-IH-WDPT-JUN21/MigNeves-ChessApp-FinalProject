@@ -27,14 +27,16 @@ public class Move {
     private Boolean inCheck;
     @Enumerated(EnumType.STRING)
     private EndResult result;
+    private String fen;
 
-    public Move(Long gameId, String move, Piece piece, boolean capture, boolean check, EndResult result) {
+    public Move(Long gameId, String move, Piece piece, boolean capture, boolean check, EndResult result, String fen) {
         setGameId(gameId);
         setMove(move);
         setPiece(piece);
         setCapture(capture);
         setInCheck(check);
         setResult(result);
+        setFen(fen);
     }
 
     public Move(MoveDTO moveDTO) {
@@ -44,5 +46,6 @@ public class Move {
         setCapture(moveDTO.getCapture());
         setInCheck(moveDTO.getInCheck());
         setResult(moveDTO.getResult());
+        setFen(moveDTO.getFen());
     }
 }

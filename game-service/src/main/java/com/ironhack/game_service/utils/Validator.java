@@ -4,7 +4,6 @@ import com.ironhack.game_service.dao.Game;
 import com.ironhack.game_service.dto.GameDTO;
 import com.ironhack.game_service.dto.MoveDTO;
 import com.ironhack.game_service.enums.EndResult;
-import com.ironhack.game_service.enums.GameType;
 import com.ironhack.game_service.proxy.MoveProxy;
 import com.ironhack.game_service.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Value;

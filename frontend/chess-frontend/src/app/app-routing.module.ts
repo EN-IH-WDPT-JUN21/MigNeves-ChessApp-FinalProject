@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { GameViewComponent } from './components/game-view/game-view.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'game/:gameId',
     component: ChessGameComponent
+  },
+  {
+    path: 'view/:gameId',
+    component: GameViewComponent
   },
   {
     path: 'settings',

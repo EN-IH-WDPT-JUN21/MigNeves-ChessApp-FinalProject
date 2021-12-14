@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-    List<Game> findByWhitePiecesPlayerIdOrBlackPiecesPlayerIdOrderByStartDateDesc(Long player1, Long player2);
     List<Game> findByIdInOrderByStartDateDesc(List<Long> ids);
     List<Game> findByResultNotOrderByStartDateDesc(EndResult result);
 }

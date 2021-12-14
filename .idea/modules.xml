@@ -3,12 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/discovery/discovery.iml" filepath="$PROJECT_DIR$/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/draw-service/draw-service.iml" filepath="$PROJECT_DIR$/draw-service/draw-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/edge-service/edge-service.iml" filepath="$PROJECT_DIR$/edge-service/edge-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/finalProject.iml" filepath="$PROJECT_DIR$/finalProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/game-service/game-service.iml" filepath="$PROJECT_DIR$/game-service/game-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/moves-service/moves-service.iml" filepath="$PROJECT_DIR$/moves-service/moves-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
     </modules>
   </component>
 </project>

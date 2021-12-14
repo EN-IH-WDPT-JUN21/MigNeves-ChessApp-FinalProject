@@ -16,11 +16,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class MoveDTO {
     private Long id;
-    @NotNull
     private Long gameId;
     private String move;
     private Piece piece;
     private Boolean capture;
     private Boolean inCheck;
     private EndResult result;
+    private String fen;
 }
