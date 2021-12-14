@@ -29,6 +29,7 @@ export class GameViewComponent implements OnInit, AfterViewChecked {
     private activatedRoute: ActivatedRoute,
     private changeDetector: ChangeDetectorRef
   ) {
+    // Get colors and pieces from settings
     this.tileColors = this.settingsService.getTileColors();
     this.pieces = this.settingsService.getPieces();
 
@@ -46,6 +47,7 @@ export class GameViewComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
   }
 
+  // Keep track of current move number and only load until that point
   ngAfterViewChecked(): void {
     if (this.game != null) {
       let move
@@ -63,17 +65,18 @@ export class GameViewComponent implements OnInit, AfterViewChecked {
         this.moveIndex = this.game.length - 1;
       }
       
-      console.log(this.moveIndex)
       this.board.reset();
 
       for(let i = 0; i <= this.moveIndex; i++) {
         this.board.move(this.game[i].move);
       }
   
+      // Detect changes in DOM
       this.changeDetector.detectChanges();
     }
   }
 
+  // Undo last move
   previousMove() {
     if (this.moveIndex >= 0) {
       this.moveIndex--;
@@ -82,6 +85,7 @@ export class GameViewComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  // Do next move
   nextMove() {
     if (this.game.length !== this.moveIndex + 1) {
       this.moveIndex++;

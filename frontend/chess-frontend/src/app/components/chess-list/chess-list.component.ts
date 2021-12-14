@@ -26,9 +26,11 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
     private settingsService: BoardSettingsService,
     private activatedRoute: ActivatedRoute
     ) { 
+      // Get colors and pieces from settings
       this.tileColors = this.settingsService.getTileColors();
       this.pieces = this.settingsService.getPieces();
 
+      // if url contains "finished fetch finished games"
       const route = this.router.url;
       route.split("/").forEach(routePart => {
         if (routePart === "finished") {
@@ -42,6 +44,8 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
               this.pages = finishedGames.pages;
             }
           );
+
+        // if url contains open fetch currently open games
         } else if (routePart == "open") {
           this.listType = "open";
           let values = "",
@@ -72,6 +76,7 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
   ngOnInit(): void {
   }
 
+  // Set each board to the last position
   ngAfterViewChecked() {
     let length = this.boards.length;
     for (let i = 0; i < length; i++) {
@@ -80,6 +85,7 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
     }
   }
 
+  // send query to the backend to delete game
   deleteGame(id: number) {
     this.databaseService.deleteGame(id).subscribe(
       rawData => {
@@ -90,6 +96,7 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
     )
   }
 
+  // reroute to view or play the game
   goToGame(id: number) {
     if (this.listType === "open") {
       this.router.navigate(['/game/', id]);
@@ -101,8 +108,8 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
 }
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { Observable } from 'rxjs';
 
+// Pipe to replace an underscore for a space
 @Pipe({name: 'replaceUnderscore'})
 export class ReplaceUnderscorePipe implements PipeTransform {
   transform(value: string): string {

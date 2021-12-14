@@ -24,6 +24,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Get pieces url and color theme
   updateValues() {
     this.pieces = this.service.getPieces();
     this.pieceArray = [
@@ -45,14 +46,14 @@ export class SettingsComponent implements OnInit {
     this.colorTileThemes = this.service.getTileThemes();
   }
 
+  // Set color theme
   tileChange(id: number) {
       this.service.setTileColors(id);
-      console.log(id);
       this.updateValues()
   }
 
+  // Set pieces url
   pieceSetChange(name: string) {
-    console.log(name);
     this.service.setPieceType(name);
     this.updateValues();
   }

@@ -50,13 +50,13 @@ class DrawControllerTest {
     void checkDraw() throws Exception {
         MoveDTO moveDTO = new MoveDTO(
                 null,
-                1L,
-                "d7c8",
+                null,
+                null,
                 Piece.BLACK_BISHOP,
                 false,
-                false,
-                EndResult.UNFINISHED,
-                "rnbqkbnr/ppp1pppp/3p4/8/8/3P4/PPP1PPPP/RNBQKBNR w KQkq - 4 4"
+                null,
+                null,
+                "3k4/8/8/2N2nb1/6B1/8/8/3K4 w - - 100 51"
         );
         String body = objectMapper.writeValueAsString(moveDTO);
         MvcResult mvcResult = mockMvc.perform(put("/chess/draw").content(body).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();

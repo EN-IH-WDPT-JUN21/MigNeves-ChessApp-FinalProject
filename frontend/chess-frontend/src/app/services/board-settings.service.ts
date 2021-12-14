@@ -6,6 +6,7 @@ import { PieceIconInput } from 'ngx-chess-board';
 })
 export class BoardSettingsService {
 
+  // Color themes
   private tileOptions: string[][] = [
     [
       "#9eecdc",
@@ -40,6 +41,7 @@ export class BoardSettingsService {
    
   ];
 
+  // Piece types
   private pieceOptions: string[] = [
     "alpha",
     "california",
@@ -73,6 +75,7 @@ export class BoardSettingsService {
 
   constructor() { }
 
+  // Method to get current color theme
   getTileColors() {
     let colors = localStorage.getItem("tileOptionId");
 
@@ -84,10 +87,12 @@ export class BoardSettingsService {
     }
   }
 
+  // Method to set color theme
   setTileColors(index: number) {
     localStorage.setItem("tileOptionId", index.toString());
   }
 
+  // Method to get current pieces
   getPieces():PieceIconInput {
     let pieceType = localStorage.getItem("pieces");
 
@@ -113,14 +118,17 @@ export class BoardSettingsService {
 
   }
 
+  // Method to set pieces
   setPieceType(name: string) {
     localStorage.setItem("pieces", name);
   }
 
+  // Get piece set options
   getPieceSetNames() {
     return this.pieceOptions;
   }
 
+  // Get color theme options
   getTileThemes() {
     return this.tileOptions;
   }

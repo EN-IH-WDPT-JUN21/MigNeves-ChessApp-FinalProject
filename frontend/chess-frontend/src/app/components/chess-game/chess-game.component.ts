@@ -100,7 +100,7 @@ export class ChessGameComponent implements OnInit {
         // call interval manager
         this.intervalManager();
         if (this.board != null) {
-          // if board already exists reset board to the current game position and stop events from being triggered
+          // if board already exists reset board to the current game position and stop events from being triggered while loading moves
           this.board.reset();
           this.saveMove = false;
           this.game.moves.forEach(move => {
@@ -108,22 +108,24 @@ export class ChessGameComponent implements OnInit {
           });
           this.saveMove = true;
 
+          // If black player rotate board
           if (this.game.colorWhite === false) {
             this.board.reverse();
           }
         }
+        // If game ended trigger modal
         if (this.game.result !== "UNFINISHED") {
           this.gameEnded();
         }
       }
     },
     err => {
-      if (err.toString().contains("UNAUTHORIZED"))
       this.router.navigate(['/unauthorized']);
     });
   }
 
   intervalManager() {
+    // If game did not finish and not your turn start interval to fetch the game position
     if (this.game.result === "UNFINISHED") {
       if ((this.game.colorWhite === true && this.game.moves.length % 2 === 0) || (this.game.colorWhite === false && this.game.moves.length % 2 !== 0)) {
         this.isMyTurn = true;
@@ -131,6 +133,8 @@ export class ChessGameComponent implements OnInit {
           clearInterval(this.timeout);
           this.timeout = null;
         }
+
+      // if your turn stop interval
       } else {
         this.isMyTurn = false;
         if (this.timeout == null) {
@@ -143,8 +147,11 @@ export class ChessGameComponent implements OnInit {
     }
   }
 
+  // Method triggered when a move is played
   moveDone() {
+    // Only trigger if saveMode is true
     if (this.saveMove) {
+      // Get last move and post to the backend to store
       let moves = this.board.getMoveHistory();
       let move = this.getMoveFromHistoryMove(moves[moves.length - 1]);
       this.game.moveToAdd = move;
@@ -157,6 +164,7 @@ export class ChessGameComponent implements OnInit {
     }
   }
 
+  // Convert HistoryMove into Move to send to the backend
   getMoveFromHistoryMove(historyMove: HistoryMove): Move {
     let endResult: EndResult;
     console.log(historyMove)
@@ -185,6 +193,7 @@ export class ChessGameComponent implements OnInit {
     return new Move(move);
   }
 
+  // Method to check stalemate position
   getAllLegalMoves(): number {
     let legalMoves = 0;
     if(this.board != null) {
@@ -235,6 +244,7 @@ export class ChessGameComponent implements OnInit {
     return legalMoves;
   }
 
+  // Convert row and column indexes to chess moves
   getMoveFromIndexes(c1: number, r1: number, c2: number, r2: number): string {
     return(String.fromCharCode(c1 + 96) + r1.toString() + String.fromCharCode(c2 + 96) + r2)
   }

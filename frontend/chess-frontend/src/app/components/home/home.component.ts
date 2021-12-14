@@ -33,10 +33,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  moves() {
-    console.log(this.board.getMoveHistory());
-  }
-
+  // Request backend to create a game. The game color can be selected as random
   async createGame(color: string) {
     let activeGames = 0;
     Object.keys(localStorage).forEach(key => {
@@ -45,6 +42,7 @@ export class HomeComponent implements OnInit {
       }
     });
 
+    // Only 10 games can be active at a time
     if (activeGames === 10) {
       this.showAlert = true;
     } else {
@@ -62,12 +60,14 @@ export class HomeComponent implements OnInit {
   
       let gameCreated: GameCreated = await this.gameService.addGame(new GameCreated(createGame));
   
+      // Save keys in localStorage
       localStorage.setItem('game-own-psw-' + gameCreated.id, color === "White" ? gameCreated.whitePassword : gameCreated.blackPassword);
       localStorage.setItem('game-opponent-psw-' + gameCreated.id, color === "White" ? gameCreated.blackPassword : gameCreated.whitePassword);
       this.router.navigate(['/game/', gameCreated.id]);
     }
   }
 
+  // Join a game already created through the usage of the provided key
   joinGame(passwordAndId: string) {
     let activeGames = 0;
     Object.keys(localStorage).forEach(key => {
@@ -76,6 +76,7 @@ export class HomeComponent implements OnInit {
       }
     });
 
+    // Only 10 games can be active at a time
     if (activeGames === 10) {
       this.showAlert = true;
     } else {
@@ -98,10 +99,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Reroute to see currently open games
   openGames() {
     this.router.navigate(['/open']);
   }
 
+  // Reroute to see finished games
   finishedGames() {
     localStorage.removeItem('move');
     this.router.navigate(['/finished', 1]);
