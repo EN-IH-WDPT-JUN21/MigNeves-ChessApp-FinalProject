@@ -35,9 +35,9 @@ ng serve
 
 ## Chess App Look
 <img alt="project logo" src="https://github.com/EN-IH-WDPT-JUN21/MigNeves-ChessApp-FinalProject/blob/main/home-page.png">
-<img alt="project logo" src="https://github.com/EN-IH-WDPT-JUN21/MigNeves-ChessApp-FinalProject/blob/main/settings.png">
-<img alt="project logo" src="https://github.com/EN-IH-WDPT-JUN21/MigNeves-ChessApp-FinalProject/blob/main/game-list.png">
 <img alt="project logo" src="https://github.com/EN-IH-WDPT-JUN21/MigNeves-ChessApp-FinalProject/blob/main/game.png">
+<img alt="project logo" src="https://github.com/EN-IH-WDPT-JUN21/MigNeves-ChessApp-FinalProject/blob/main/game-list.png">
+<img alt="project logo" src="https://github.com/EN-IH-WDPT-JUN21/MigNeves-ChessApp-FinalProject/blob/main/settings.png">
 
 ## Available options
 ### Create Game
