@@ -3,7 +3,7 @@ import { BoardSettingsService } from './../../services/board-settings.service';
 import { NgxChessBoardComponent, NgxChessBoardView, PieceIconInput } from 'ngx-chess-board';
 import { SimplifiedGame } from './../../models/simplified-game-models';
 import { GameDatabaseService } from './../../services/game-database.service';
-import { AfterViewChecked, AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,8 +24,10 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
     private router: Router,
     private databaseService: GameDatabaseService,
     private settingsService: BoardSettingsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef
     ) { 
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       // Get colors and pieces from settings
       this.tileColors = this.settingsService.getTileColors();
       this.pieces = this.settingsService.getPieces();
@@ -42,6 +44,7 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
               let finishedGames: FinishedGames = rawData;
               this.games = finishedGames.games;
               this.pages = finishedGames.pages;
+              console.log(this.pages);
             }
           );
 
@@ -83,6 +86,7 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
       let board = this.boards.get(i);
       board?.setFEN(this.games[i].fen);
     }
+    this.changeDetector.detectChanges();
   }
 
   // send query to the backend to delete game
@@ -102,8 +106,17 @@ export class ChessListComponent implements OnInit, AfterViewChecked{
       this.router.navigate(['/game/', id]);
     } else {
       this.router.navigate(['/view', id]);
-    }
-    
+    } 
+  }
+
+  previousPage() {
+    this.page--;
+    this.router.navigate(['/finished', this.page]);
+  }
+
+  nextPage() {
+    this.page++;
+    this.router.navigate(['/finished', this.page]);
   }
 }
 

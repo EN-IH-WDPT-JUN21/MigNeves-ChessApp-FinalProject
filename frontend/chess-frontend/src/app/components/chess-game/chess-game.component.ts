@@ -120,7 +120,9 @@ export class ChessGameComponent implements OnInit {
       }
     },
     err => {
-      this.router.navigate(['/unauthorized']);
+      if (err.message.contains("UNAUTHORIZED")) {
+        this.router.navigate(['/unauthorized']);
+      }
     });
   }
 

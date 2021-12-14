@@ -1,4 +1,4 @@
-<div *ngIf="games != null">
+<div *ngIf="games != null" class="d-flex flex-column justify-content-center align-items-center">
     <div *ngFor="let game of games;" class="d-flex flex-row align-items-center game justify-content-between" (click)="goToGame(game.id)">
         <div class="d-flex flex-row align-items-center">
             <ngx-chess-board class="board" #board [size]="140" [drawDisabled]="true" [showCoords]="false" [showLastMove]="false" [showLegalMoves]="false" [lightTileColor]="tileColors[0]" [dragDisabled]="true" [lightDisabled]="true" [darkDisabled]="true" [showActivePiece]="false" [darkTileColor]="tileColors[1]" [pieceIcons]="pieces"></ngx-chess-board>
@@ -11,4 +11,9 @@
         <button *ngIf="game.owner === true" (click)="deleteGame(game.id) ;$event.stopPropagation()" class="btn btn-danger delete"><i class="bi bi-trash"></i></button>
     </div>
     <div *ngIf="games.length === 0" class="game none">There are no games!</div>
+    <div *ngIf="pages != null && pages > 1" style="margin-top: 25px;" class="d-flex flex-row">
+        <button class="btn btn-secondary btn-chess page-button" [disabled]="page <= 1" (click)="previousPage()"><i class="bi bi-caret-left-fill"></i></button>
+        <div class="page">{{page}}</div>
+        <button class="btn btn-secondary btn-chess page-button" [disabled]="page >= pages" (click)="nextPage()"><i class="bi bi-caret-right-fill"></i></button>
+    </div>
 </div>

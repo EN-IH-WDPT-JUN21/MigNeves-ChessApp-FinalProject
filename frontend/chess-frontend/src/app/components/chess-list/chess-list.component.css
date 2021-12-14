@@ -33,3 +33,20 @@
 span {
     color: #1dc5a3;
 }
+
+.page {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    background-color: #1f2933;
+    border-radius: 7px;
+    color: #f5f7fa;
+    text-align: center;
+    line-height: 48px;
+}
+
+.page-button {
+    width: 50px;
+}
