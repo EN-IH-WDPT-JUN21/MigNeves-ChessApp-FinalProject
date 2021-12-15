@@ -8,9 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="moves-service" />
-        <module name="game-service" />
-        <module name="edge-service" />
         <module name="draw-service" />
+        <module name="edge-service" />
+        <module name="game-service" />
         <module name="discovery" />
         <module name="gateway" />
       </profile>
